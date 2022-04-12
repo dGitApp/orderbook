@@ -7,8 +7,10 @@ const app = express();
 // import routes
 const orderbookRoute = require('./routes/orderbook');
 
+// middleware
 app.use('/orderbook', orderbookRoute)
 
+//route
 app.get('/', (req, res) => {
     res.send('API ok')
 })
