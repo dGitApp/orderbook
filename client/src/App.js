@@ -2,7 +2,6 @@ import * as React from 'react';
 import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { Typography } from '@mui/material';
-import { searchOrderbook } from "@traderxyz/nft-swap-sdk/dist/sdk/v4/orderbook";
 
 import './App.css';
 import logo from './assets/icons/dGitIconGreen.png'
@@ -10,6 +9,8 @@ import logo from './assets/icons/dGitIconGreen.png'
 
 function App() {
   const [checked, setChecked] = React.useState(true);
+  const [isFetched, setIsFetched] = React.useState(false);
+  const [query, setQuery] = React.useState([]);
 
   const handleChange = (event) => {
     setChecked(event.target.checked);
@@ -19,7 +20,17 @@ function App() {
     status: 'open'
   }
   
-  async () => {const fetchResults = await searchOrderbook({status: 'open'})
+  React.useEffect(() => {
+    async function fetchData () {
+      const fetchResults = await fetch(`https://api.trader.xyz/orderbook/orders?status=open`)
+      .then(res => res.json()).then( res => {
+        setQuery(fetchResults.orders)
+        setIsFetched(true)
+        }
+      )
+    }
+    fetchData();
+  }, [checked])
   
   return (
     <div className = 'App'>
@@ -42,7 +53,9 @@ function App() {
         />
       </div>
       <div className='order-container'> 
-        {fetchResults}
+        { isFetched ? query.map( order => <p className="fs-12"> {order} </p> )
+          : <p> Orderbook is empty </p>
+        }
       </div>
     </div>
   );
