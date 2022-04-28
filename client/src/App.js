@@ -49,7 +49,7 @@ function App() {
               inputProps={{ 'aria-label': 'controlled' }}
             />}
           
-          label= {<Typography variant="body1" color="white"> Status Orders (Invalid/Valid) </Typography>}
+          label= {<Typography variant="body1" color="white"> Valid Orders (Invalid/Valid) </Typography>}
         />
       </div>
       <div className='order-container'> 
