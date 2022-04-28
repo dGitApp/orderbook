@@ -22,15 +22,15 @@ function App() {
   
   React.useEffect(() => {
     async function fetchData () {
-      const fetchResults = await fetch(`https://api.trader.xyz/orderbook/orders?status=open`)
+      await fetch(`https://api.trader.xyz/orderbook/orders?status=open`)
       .then(res => res.json()).then( res => {
-        setQuery(fetchResults.orders)
+        setQuery(JSON.stringify(res.orders))
         setIsFetched(true)
         }
       )
     }
     fetchData();
-  }, [checked])
+  }, [])
   
   return (
     <div className = 'App'>
@@ -53,7 +53,7 @@ function App() {
         />
       </div>
       <div className='order-container'> 
-        { isFetched ? query.map( order => <p className="fs-12"> {order} </p> )
+        { isFetched ? <p className="fs-12"> {query} </p> 
           : <p> Orderbook is empty </p>
         }
       </div>
