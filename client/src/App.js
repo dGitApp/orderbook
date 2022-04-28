@@ -54,12 +54,10 @@ function App() {
       </div>
       <div className='order-container'> 
         { isFetched ? 
-          
-          <p className="fs-12"> 
-            {JSON.stringify(query.orders)} 
-          </p> : 
-          
-          <p> Orderbook is empty </p>
+          <p className="fs-12">
+            {JSON.stringify(query.orders[0])} 
+          </p> 
+          : <p> Orderbook is empty </p>
         }
       </div>
     </div>
