@@ -8,29 +8,29 @@ import logo from './assets/icons/dGitIconGreen.png'
 
 
 function App() {
-  const [checked, setChecked] = React.useState(true);
+  const rootUrl = 'https://api.trader.xyz'
+  const [checked, setChecked] = React.useState(false);
   const [isFetched, setIsFetched] = React.useState(false);
-  const [query, setQuery] = React.useState([]);
+  const [query, setQuery] = React.useState();
+  const [filter, setFilter] = React.useState('valid=all')
 
   const handleChange = (event) => {
     setChecked(event.target.checked);
   };
-
-  const params =  {
-    status: 'open'
-  }
   
   React.useEffect(() => {
     async function fetchData () {
-      await fetch(`https://api.trader.xyz/orderbook/orders?status=open`)
+      if(checked) setFilter('valid=valid')
+      else setFilter('valid=all')
+      await fetch( `${rootUrl}/orderbook/orders?${filter}`)
       .then(res => res.json()).then( res => {
-        setQuery(JSON.stringify(res.orders))
+        setQuery(res)
         setIsFetched(true)
         }
       )
     }
     fetchData();
-  }, [])
+  }, [checked])
   
   return (
     <div className = 'App'>
@@ -53,8 +53,13 @@ function App() {
         />
       </div>
       <div className='order-container'> 
-        { isFetched ? <p className="fs-12"> {query} </p> 
-          : <p> Orderbook is empty </p>
+        { isFetched ? 
+          
+          <p className="fs-12"> 
+            {JSON.stringify(query.orders)} 
+          </p> : 
+          
+          <p> Orderbook is empty </p>
         }
       </div>
     </div>
