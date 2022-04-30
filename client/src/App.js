@@ -2,6 +2,7 @@ import * as React from 'react';
 import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { Typography } from '@mui/material';
+import Order from './components/Order'
 
 import './App.css';
 import logo from './assets/icons/dGitIconGreen.png'
@@ -18,6 +19,7 @@ function App() {
     setChecked(event.target.checked);
   };
   
+  // fetching data from api when checked is changing
   React.useEffect(() => {
     async function fetchData () {
       if(checked) setFilter('valid=valid')
@@ -59,6 +61,7 @@ function App() {
           </p> 
           : <p> Orderbook is empty </p>
         }
+        <Order></Order>
       </div>
     </div>
   );
