@@ -56,12 +56,14 @@ function App() {
       </div>
       <div className='order-container'> 
         { isFetched ? 
-          <p className="fs-12">
-            {JSON.stringify(query.orders[0])} 
-          </p> 
+          <div className='order-content'>
+            <text>
+              {JSON.stringify(query.orders[2])} 
+            </text>
+          </div> 
           : <p> Orderbook is empty </p>
         }
-        <Order></Order>
+        <Order data={query.orders[2]} valid = {checked ? true : false}></Order>
       </div>
     </div>
   );

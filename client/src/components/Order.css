@@ -1,3 +1,6 @@
-.order {
-    width: 800px;
+.card-content {
+    display: 'flex';
+    flex-direction: 'row'; 
+    overflow: 'auto'; 
+    justify-content: 'center';
 }
