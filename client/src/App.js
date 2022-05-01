@@ -53,6 +53,9 @@ function App() {
           
           label= {<Typography variant="body1" color="white"> Valid Orders (Invalid/Valid) </Typography>}
         />
+        <div>
+          Total Orders:
+        </div>
       </div>
       <div className='order-container'> 
         { isFetched ? query.orders.map((item) => <Order data={item} valid = {checked ? true : false} />)

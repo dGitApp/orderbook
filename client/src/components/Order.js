@@ -10,9 +10,7 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import CircleRoundedIcon from '@mui/icons-material/CircleRounded';
 
-
 import { styled } from '@mui/material/styles';
-import './Order.css'
 
 
 const Item = styled(Card)(({ theme }) => ({
