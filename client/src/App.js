@@ -55,15 +55,10 @@ function App() {
         />
       </div>
       <div className='order-container'> 
-        { isFetched ? 
-          <div className='order-content'>
-            <text>
-              {JSON.stringify(query.orders[2])} 
-            </text>
-          </div> 
+        { isFetched ? <Order data={query.orders[1]} valid = {checked ? true : false} />
           : <p> Orderbook is empty </p>
         }
-        <Order data={query.orders[2]} valid = {checked ? true : false}></Order>
+        {/* query.orders.map((item) => <Order data={item} valid = {checked ? true : false} />) */}
       </div>
     </div>
   );
