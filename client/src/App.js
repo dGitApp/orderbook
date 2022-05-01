@@ -20,10 +20,26 @@ function App() {
   };
   
   // fetching data from api when checked is changing
+
+  //  const fetchData =  React.useCallback(async () => {
+  //     if(checked) {setFilter('valid=valid')}
+  //     else {setFilter('valid=all')}
+  //     await fetch( `${rootUrl}/orderbook/orders?${filter}`)
+  //     .then(res => res.json()).then( res => {
+  //       setQuery(res)
+  //       setIsFetched(true)
+  //       })
+  //   }, [filter]
+  // )
+
+  // React.useEffect(() => {
+  //   fetchData()
+  // }, [fetchData])
+
   React.useEffect(() => {
-    async function fetchData () {
-      if(checked) setFilter('valid=valid')
-      else setFilter('valid=all')
+    async function fetchData() {
+      if(checked) {setFilter('valid=valid')}
+      else {setFilter('valid=all')}
       await fetch( `${rootUrl}/orderbook/orders?${filter}`)
       .then(res => res.json()).then( res => {
         setQuery(res)
@@ -53,8 +69,8 @@ function App() {
           
           label= {<Typography variant="body1" color="white"> Valid Orders (Invalid/Valid) </Typography>}
         />
-        <div>
-          Total Orders:
+        <div className='App-Info'>
+          Total Orders: {query.orders.length}
         </div>
       </div>
       <div className='order-container'> 

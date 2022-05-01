@@ -28,6 +28,10 @@
  justify-content: center;
 }
 
+.App-Info {
+  color: white
+}
+
 .order-container {
   margin-left: 10vmin;
   margin-right: 10vmin;
