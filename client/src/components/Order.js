@@ -42,10 +42,20 @@ function Order({data, valid}) {
   };
   
   return (
-    <Box sx = {{width: '100%', display: 'flex', flexDirection: 'column'}}>
-      <Stack spacing={2}>
-        <Item elevation={5}>
+    <Box sx = {{width: '100%', display: 'flex', flexDirection: 'column', marginBottom: '12px'}}>
+      <Stack >
+        <Item elevation={12}>
           <CardContent sx = {{padding: '5px', display: 'flex', flexDirection: 'row'}}>
+            <Box component='div' sx = {{ marginLeft: '12px', padding: '8px', display: 'flex', flexDirection: 'row', justifyContent: 'right'}}> 
+              <Box component='div' sx = {{marginRight: '12px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+                  { valid ? <CircleRoundedIcon color='green'/> : <CircleRoundedIcon color='warning'/> }
+              </Box>
+              <Box component='div' sx = {{marginLeft: '12px', display: 'flex', flexDirection: 'column', textAlign: 'left', justifyContent: 'center', alignItems: 'center'}}>
+                  <Typography fontWeight='bold'      >       orderStatus:                          </Typography>
+                  <Typography aria-label = 'Status'  >  {JSON.stringify(data.orderStatus.status)}  </Typography>
+              </Box>   
+            </Box>
+            <Box sx = {{width: '30%'}} />
             <Box component='div' sx = {{ padding: '8px', display: 'flex', flexDirection: 'row', overflow: 'auto', alignItems: 'center'}}>
               <Box component='div' sx = {{marginRight: '10px', display: 'flex', flexDirection: 'column', textAlign: 'center'}}>
                   <Typography fontWeight='bold'      >  maker:    </Typography>
@@ -75,15 +85,9 @@ function Order({data, valid}) {
                   <Typography fontWeight='bold'      >  nftType:          </Typography>
                   <Typography aria-label = 'nftType' > {data.nftType}     </Typography>
               </Box>
-            </Box>
-            <Box sx = {{width: '37%'}} />
-            <Box component='div' sx = {{ padding: '8px', display: 'flex', flexDirection: 'row', justifyContent: 'right'}}>
-              <Box component='div' sx = {{marginRight: '8px', display: 'flex', flexDirection: 'column', textAlign: 'left', justifyContent: 'center', alignItems: 'center'}}>
-                  <Typography fontWeight='bold'      >       orderStatus:                          </Typography>
-                  <Typography aria-label = 'Status'  >  {JSON.stringify(data.orderStatus.status)}  </Typography>
-              </Box>    
-              <Box component='div' sx = {{marginLeft: '12px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-                  { valid ? <CircleRoundedIcon color='green'/> : <CircleRoundedIcon color='warning'/> }
+              <Box component='div' sx = {{marginLeft: '10px', display: 'flex', flexDirection: 'column', textAlign: 'center'}}>
+                  <Typography fontWeight='bold'  >  Fee:          </Typography>
+                  <Typography aria-label = 'Fee' > {data.order.fee ? data.order.fee : 0}   </Typography>
               </Box>
             </Box>
           </CardContent>
