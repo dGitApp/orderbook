@@ -55,10 +55,9 @@ function App() {
         />
       </div>
       <div className='order-container'> 
-        { isFetched ? <Order data={query.orders[1]} valid = {checked ? true : false} />
+        { isFetched ? query.orders.map((item) => <Order data={item} valid = {checked ? true : false} />)
           : <p> Orderbook is empty </p>
         }
-        {/* query.orders.map((item) => <Order data={item} valid = {checked ? true : false} />) */}
       </div>
     </div>
   );
