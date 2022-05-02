@@ -10,45 +10,42 @@ import logo from './assets/icons/dGitIconGreen.png'
 
 function App() {
   const rootUrl = 'https://api.trader.xyz'
-  const [checked, setChecked] = React.useState(false);
+  const [checked, setChecked] = React.useState();
   const [isFetched, setIsFetched] = React.useState(false);
-  const [query, setQuery] = React.useState();
-  const [filter, setFilter] = React.useState('valid=all')
+  const [data, setData] = React.useState();
+  const [filterParams, setFilterParams] = React.useState('valid=all')
 
   const handleChange = (event) => {
+    if(event.target.checked) {
+      setFilterParams('valid=valid')
+    } else {
+      setFilterParams('valid=all')
+    }
     setChecked(event.target.checked);
   };
-  
+
   // fetching data from api when checked is changing
-
-  //  const fetchData =  React.useCallback(async () => {
-  //     if(checked) {setFilter('valid=valid')}
-  //     else {setFilter('valid=all')}
-  //     await fetch( `${rootUrl}/orderbook/orders?${filter}`)
-  //     .then(res => res.json()).then( res => {
-  //       setQuery(res)
-  //       setIsFetched(true)
-  //       })
-  //   }, [filter]
-  // )
-
-  // React.useEffect(() => {
-  //   fetchData()
-  // }, [fetchData])
-
   React.useEffect(() => {
-    async function fetchData() {
-      if(checked) {setFilter('valid=valid')}
-      else {setFilter('valid=all')}
-      await fetch( `${rootUrl}/orderbook/orders?${filter}`)
-      .then(res => res.json()).then( res => {
-        setQuery(res)
-        setIsFetched(true)
-        }
-      )
+    let isSubscribed = true;
+    // declare the async data fetching function
+    const fetchData = async () => {
+      // get the data from API
+      await fetch(`${rootUrl}/orderbook/orders?${filterParams}`)
+        .then(res => res.json()).then(res => {
+            if (isSubscribed) {
+              setData(res)
+              setIsFetched(true)
+            }
+          }
+        )
     }
-    fetchData();
-  }, [checked])
+    // call the function
+    fetchData()
+      .catch(console.error);;
+    
+    // cancel any future setData
+    return () => isSubscribed = false;
+  }, [filterParams])
   
   return (
     <div className = 'App'>
@@ -70,11 +67,11 @@ function App() {
           label= {<Typography variant="body1" color="white"> Valid Orders (Invalid/Valid) </Typography>}
         />
         <div className='App-Info'>
-          Total Orders: {query.orders.length}
+          Total Orders: {isFetched ? data.orders.length : 0 }
         </div>
       </div>
       <div className='order-container'> 
-        { isFetched ? query.orders.map((item) => <Order data={item} valid = {checked ? true : false} />)
+        { isFetched ? data.orders.map((item) => <Order data={item} valid = {checked ? true : false} />)
           : <p> Orderbook is empty </p>
         }
       </div>
