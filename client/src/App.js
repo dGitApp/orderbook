@@ -3,6 +3,10 @@ import Switch from '@mui/material/Switch';
 import {FormControlLabel, FormGroup, Typography } from '@mui/material';
 import Order from './components/Order'
 import Stack from '@mui/material/Stack'
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
 import './App.css';
 import logo from './assets/icons/dGitIconGreen.png'
@@ -15,6 +19,12 @@ function App() {
   const [isFetched, setIsFetched] = React.useState(false);
   const [data, setData] = React.useState();
   const [filterParams, setFilterParams] = React.useState('valid=all')
+  const [statusOrder, setStatusOrder] = React.useState('status=all');
+
+  const handleStatus = (event) => {
+    setStatusOrder(event.target.value);
+    setFilterParams(statusOrder)
+  };
 
   const handleValid = (event) => {
     if(event.target.checked) {
@@ -66,6 +76,22 @@ function App() {
       </header>
       <div className='App-Search'>
         <FormGroup sx = {{padding: '10px'}}>
+          <FormControl fullWidth>
+            <InputLabel id="status-select-label">Status</InputLabel>
+            <Select
+              labelId="status-select-label"
+              id="status-select"
+              value={statusOrder}
+              label="Status"
+              onChange={handleStatus}
+            >
+              <MenuItem value='status=open'>Open</MenuItem>
+              <MenuItem value='status=filled'>Filled</MenuItem>
+              <MenuItem value='status=expired'>Expired</MenuItem>
+              <MenuItem value='status=cancelled'>Cancelled</MenuItem>
+              <MenuItem value='status=all'>All</MenuItem>
+            </Select>
+          </FormControl>
           <Stack direction="row" alignItems="center" sx = {{color: '#fff'}}>
             <Typography sx = {{marginRight: '15px'}}>Public</Typography>
             <FormControlLabel 
@@ -73,15 +99,13 @@ function App() {
               label = 'Private'
             />
           </Stack>
-          
           <Stack direction="row" alignItems="center" sx = {{color: '#fff'}}>
-            <Typography sx = {{marginRight: '17px'}}> Valid</Typography>
+            <Typography sx = {{marginRight: '15px', marginLeft: '8px'}}> Valid</Typography>
             <FormControlLabel 
               control = {<Switch size = 'medium' checked={checkedValid} onChange={handleValid}/>}
               label = 'Invalid'
             />
           </Stack>
-
         </FormGroup>
         <div className='App-Info'>
           Total Orders: {isFetched ? data.orders.length : 0 }
@@ -89,7 +113,7 @@ function App() {
       </div>
       <div className='order-container'> 
         { isFetched ? data.orders.map((item, index) => <Order key = {index} data={item} valid = {checkedValid ? true : false} />)
-          : <p> Orderbook is empty </p>
+          : <Typography color = '#fff'> OrderBook is empty</Typography>
         }
       </div>
     </div>
