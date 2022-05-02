@@ -69,7 +69,7 @@ function App() {
           <Stack direction="row" alignItems="center" sx = {{color: '#fff'}}>
             <Typography sx = {{marginRight: '15px'}}>Public</Typography>
             <FormControlLabel 
-              control = {<Switch defaultChecked size = 'medium' checked={checkedVisibility} onChange={handleVisibility} />}
+              control = {<Switch size = 'medium' checked={checkedVisibility} onChange={handleVisibility} />}
               label = 'Private'
             />
           </Stack>
@@ -77,7 +77,7 @@ function App() {
           <Stack direction="row" alignItems="center" sx = {{color: '#fff'}}>
             <Typography sx = {{marginRight: '17px'}}> Valid</Typography>
             <FormControlLabel 
-              control = {<Switch defaultChecked size = 'medium' checked={checkedValid} onChange={handleValid}/>}
+              control = {<Switch size = 'medium' checked={checkedValid} onChange={handleValid}/>}
               label = 'Invalid'
             />
           </Stack>
@@ -88,7 +88,7 @@ function App() {
         </div>
       </div>
       <div className='order-container'> 
-        { isFetched ? data.orders.map((item) => <Order data={item} valid = {checkedValid ? true : false} />)
+        { isFetched ? data.orders.map((item, index) => <Order key = {index} data={item} valid = {checkedValid ? true : false} />)
           : <p> Orderbook is empty </p>
         }
       </div>
