@@ -1,8 +1,8 @@
 import * as React from 'react';
 import Switch from '@mui/material/Switch';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import { Typography } from '@mui/material';
+import {FormControlLabel, FormGroup, Typography } from '@mui/material';
 import Order from './components/Order'
+import Stack from '@mui/material/Stack'
 
 import './App.css';
 import logo from './assets/icons/dGitIconGreen.png'
@@ -10,18 +10,28 @@ import logo from './assets/icons/dGitIconGreen.png'
 
 function App() {
   const rootUrl = 'https://api.trader.xyz'
-  const [checked, setChecked] = React.useState();
+  const [checkedVisibility, setCheckedVisibility] = React.useState(false);
+  const [checkedValid, setCheckedValid] = React.useState(false);
   const [isFetched, setIsFetched] = React.useState(false);
   const [data, setData] = React.useState();
   const [filterParams, setFilterParams] = React.useState('valid=all')
 
-  const handleChange = (event) => {
+  const handleValid = (event) => {
     if(event.target.checked) {
       setFilterParams('valid=valid')
     } else {
       setFilterParams('valid=all')
     }
-    setChecked(event.target.checked);
+    setCheckedValid(event.target.checked);
+  };
+
+  const handleVisibility = (event) => {
+    if(event.target.checked) {
+      setFilterParams('visibility=private')
+    } else {
+      setFilterParams('visibility=public')
+    }
+    setCheckedVisibility(event.target.checked);
   };
 
   // fetching data from api when checked is changing
@@ -35,6 +45,7 @@ function App() {
             if (isSubscribed) {
               setData(res)
               setIsFetched(true)
+              console.log(`${rootUrl}/orderbook/orders?${filterParams}`)
             }
           }
         )
@@ -54,24 +65,30 @@ function App() {
         <text> dGit - Orderbook v0.1.0 </text>
       </header>
       <div className='App-Search'>
-        <FormControlLabel
-          control={
-            <Switch
-              size="large"
-              color = 'info'
-              checked={checked}
-              onChange={handleChange}
-              inputProps={{ 'aria-label': 'controlled' }}
-            />}
+        <FormGroup sx = {{padding: '10px'}}>
+          <Stack direction="row" alignItems="center" sx = {{color: '#fff'}}>
+            <Typography sx = {{marginRight: '15px'}}>Public</Typography>
+            <FormControlLabel 
+              control = {<Switch defaultChecked size = 'medium' checked={checkedVisibility} onChange={handleVisibility} />}
+              label = 'Private'
+            />
+          </Stack>
           
-          label= {<Typography variant="body1" color="white"> Valid Orders (Invalid/Valid) </Typography>}
-        />
+          <Stack direction="row" alignItems="center" sx = {{color: '#fff'}}>
+            <Typography sx = {{marginRight: '17px'}}> Valid</Typography>
+            <FormControlLabel 
+              control = {<Switch defaultChecked size = 'medium' checked={checkedValid} onChange={handleValid}/>}
+              label = 'Invalid'
+            />
+          </Stack>
+
+        </FormGroup>
         <div className='App-Info'>
           Total Orders: {isFetched ? data.orders.length : 0 }
         </div>
       </div>
       <div className='order-container'> 
-        { isFetched ? data.orders.map((item) => <Order data={item} valid = {checked ? true : false} />)
+        { isFetched ? data.orders.map((item) => <Order data={item} valid = {checkedValid ? true : false} />)
           : <p> Orderbook is empty </p>
         }
       </div>
