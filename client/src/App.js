@@ -11,7 +11,6 @@ import Select from '@mui/material/Select';
 import './App.css';
 import logo from './assets/icons/dGitIconGreen.png'
 
-
 function App() {
   const rootUrl = 'https://api.trader.xyz'
   const [checkedVisibility, setCheckedVisibility] = React.useState(false);
@@ -22,8 +21,8 @@ function App() {
   const [statusOrder, setStatusOrder] = React.useState('status=all');
 
   const handleStatus = (event) => {
-    setStatusOrder(event.target.value);
-    setFilterParams(statusOrder)
+    setFilterParams(event.target.value)
+    setStatusOrder(event.target.value)
   };
 
   const handleValid = (event) => {
@@ -75,21 +74,22 @@ function App() {
         <text> dGit - Orderbook v0.1.0 </text>
       </header>
       <div className='App-Search'>
-        <FormGroup sx = {{padding: '10px'}}>
-          <FormControl fullWidth>
-            <InputLabel id="status-select-label">Status</InputLabel>
+        <FormGroup row = 'false' sx = {{padding: '10px'}}>
+          <FormControl sx ={{width: '10rem', marginRight: '15px', color: '#fff'}}>
+            <InputLabel id="status-select-label" sx={{color: '#fff'}}>Status</InputLabel>
             <Select
               labelId="status-select-label"
               id="status-select"
               value={statusOrder}
               label="Status"
               onChange={handleStatus}
+              sx = {{color: '#fff'}}
             >
-              <MenuItem value='status=open'>Open</MenuItem>
-              <MenuItem value='status=filled'>Filled</MenuItem>
-              <MenuItem value='status=expired'>Expired</MenuItem>
-              <MenuItem value='status=cancelled'>Cancelled</MenuItem>
-              <MenuItem value='status=all'>All</MenuItem>
+              <MenuItem value='status=open'>      Open      </MenuItem>
+              <MenuItem value='status=filled'>    Filled    </MenuItem>
+              <MenuItem value='status=expired'>   Expired   </MenuItem>
+              <MenuItem value='status=cancelled'> Cancelled </MenuItem>
+              <MenuItem value='status=all'>       All       </MenuItem>
             </Select>
           </FormControl>
           <Stack direction="row" alignItems="center" sx = {{color: '#fff'}}>
@@ -119,5 +119,7 @@ function App() {
     </div>
   );
 }
+
+
 
 export default App;
